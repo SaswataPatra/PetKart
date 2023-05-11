@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('database.db')
+conn = sqlite3.connect('petshop.db')
 
 
 with open('schema.sql') as f:
@@ -9,10 +9,12 @@ with open('schema.sql') as f:
 cur = conn.cursor()
 
 # Insert some dummy data into the User table
-cur.execute("INSERT INTO User (name, email, password, billing_address, shipping_address, payment_methods, image) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            ('John Doe', 'john@example.com', 'password123', '123 Main St', '456 Maple Ave', 'credit card', None))
-cur.execute("INSERT INTO User (name, email, password, billing_address, shipping_address, payment_methods, image) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            ('Jane Smith', 'jane@example.com', 'letmein', '789 Oak Rd', '1010 Pine St', 'paypal', None))
+user_data = [
+    (1, 'John Smith', 'john@example.com', 'password123', '123 Main St', '456 Maple Ave', 'Credit Card', None),
+    (2, 'Jane Doe', 'jane@example.com', 'password456', '789 Oak St', '321 Pine Rd', 'PayPal', None),
+    (3, 'Bob Johnson', 'bob@example.com', 'password789', '456 Elm St', '789 Birch Blvd', 'Credit Card', None)
+]
+cur.executemany('INSERT INTO User (id, name, email, password, billing_address, shipping_address, payment_methods, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', user_data)
 
 # Insert some dummy data into the Product table
 cur.execute("INSERT INTO Product (name, description, price, category, image, stock) VALUES (?, ?, ?, ?, ?, ?)",

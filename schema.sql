@@ -8,8 +8,10 @@ CREATE TABLE IF NOT EXISTS User (
     shipping_address TEXT,
     payment_methods TEXT,
     image BLOB,
+    role TEXT DEFAULT 'customer',
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
 -- Create the Product table
 CREATE TABLE IF NOT EXISTS Product (
     id INTEGER PRIMARY KEY,
@@ -49,7 +51,7 @@ CREATE TABLE IF NOT EXISTS CartItems(
     user_id INTEGER NOT NULL,
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(id),
+    FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (product_id) REFERENCES Products(id)
 );
 
