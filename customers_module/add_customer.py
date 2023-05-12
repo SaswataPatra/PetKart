@@ -11,6 +11,7 @@ def add(request):
         billing_address = data['billing_address']
         shipping_address = data['shipping_address']
         payment_methods = data['payment_methods']
+        role = data['role']
         # image = data['image']
 
         # Connect to the database
@@ -18,7 +19,7 @@ def add(request):
         cur = conn.cursor()
 
         # Insert customer into the database
-        test = cur.execute('INSERT INTO User (name, email, password, billing_address, shipping_address, payment_methods) VALUES (?, ?, ?, ?, ?, ?)', (name, email, password, billing_address, shipping_address, payment_methods))
+        test = cur.execute('INSERT INTO User (name, email, password, billing_address, shipping_address, payment_methods,role) VALUES (?, ?, ?, ?, ?, ?,?)', (name, email, password, billing_address, shipping_address, payment_methods,role))
         print(test)
         # Commit changes and close connection
         conn.commit()

@@ -1,0 +1,6 @@
+[MASTER]
+init-hook="import sys; sys.path.append('./')"
+load-plugins=pylint.extensions.circular_import
+
+[MESSAGES CONTROL]
+disable=circular-import
