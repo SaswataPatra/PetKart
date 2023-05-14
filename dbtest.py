@@ -1,5 +1,8 @@
 import sqlite3
+from Login_module.models import User
+from flask import Flask, jsonify
 
+app = Flask(__name__)
 connection = sqlite3.connect('petshop.db')
 
 
@@ -33,6 +36,14 @@ query_cartitem_table = "SELECT * FROM CartItems;"
 query_category_table = "SELECT * FROM Categories;"
 name = "Kaustav Sarkar"
 q = cur.execute("SELECT * FROM User WHERE name LIKE ?", ('%' + name + '%',))
+
+with app.app_context():
+    email = "ale@example.com"
+    user = User.find_by_email(email)
+    print(type(user.created))
+    result = jsonify({'user':user.to_dict()})
+
+    print(result)
 # user_id=2
 # q = cur.execute('SELECT role FROM User WHERE id = ?', (user_id,))
 # user_role = cur.fetchone()[0]

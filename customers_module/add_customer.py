@@ -2,6 +2,7 @@ import sqlite3
 # from flask import request, jsonify
 
 def add(request):
+    conn = None
     # Get data from request
     try:
         data = request.get_json()
@@ -11,7 +12,10 @@ def add(request):
         billing_address = data['billing_address']
         shipping_address = data['shipping_address']
         payment_methods = data['payment_methods']
-        role = data['role']
+        try:
+            role = data['role']
+        except:
+            role="customer"
         # image = data['image']
 
         # Connect to the database
@@ -29,7 +33,7 @@ def add(request):
         conn.rollback()
         return False, e.args[0]
     finally:
-        conn.close()
+        if conn is not None:
+            conn.close()
 
     # return jsonify({'message': 'Customer added successfully'})
-
