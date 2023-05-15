@@ -65,6 +65,7 @@ def get_customer_api(id):
 
 # Endpoint to add a new customer
 @app.route('/customers', methods=['POST'])
+@admin_required
 def add_customers():
     success,message = add_customer.add(request)
     if success:
@@ -155,7 +156,6 @@ def get_product_api(id):
 
 # Endpoint to add a new product
 @app.route('/products', methods=['POST'])
-@staff_required
 def add_product_api():
     success, message = add_product.add(request)
     if success:
@@ -165,7 +165,6 @@ def add_product_api():
 
 # Endpoint to delete a product by id
 @app.route('/products/<int:id>', methods=['DELETE'])
-@staff_required
 def delete_product_api(id):
     success, message = delete_product.delete_product_by_id(id)
     if success:
