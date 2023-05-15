@@ -4,6 +4,7 @@ from decorators.staff import staff_required
 # from decorators.dummy import dummy_decorator
 import sqlite3
 from flask import Flask, render_template,g,request,jsonify,Blueprint
+from flask_cors import CORS
 #customer module imports
 import customers_module.add_customer as add_customer
 import customers_module.get_all_customers as get_all_customers
@@ -32,6 +33,8 @@ import time
 app = Flask(__name__) 
 app.config['JWT_SECRET_KEY'] = 'super-secret'
 app.register_blueprint(auth_bp, url_prefix='/auth')
+cors = CORS(app, origins='*')
+
 
 jwt = JWTManager(app)
 
