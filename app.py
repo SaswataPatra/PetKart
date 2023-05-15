@@ -28,11 +28,14 @@ import products_module.delete_product as delete_product
 
 from flask_jwt_extended import JWTManager,jwt_required,get_jwt
 from Login_module.auth import bp as auth_bp
+# Register the cart_module Blueprint
+from cart_module.routes import cart_module
 import time
 
 app = Flask(__name__) 
 app.config['JWT_SECRET_KEY'] = 'super-secret'
 app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(cart_module)
 cors = CORS(app, origins='*')
 
 
