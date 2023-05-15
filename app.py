@@ -128,7 +128,6 @@ def add_order_api():
 
 # Endpoint to delete an order by id
 @app.route('/orders/<int:id>', methods=['DELETE'])
-@staff_required
 def delete_order_api(id):
     success, message = delete_order.delete_order_by_id(id)
     if success:
