@@ -46,6 +46,10 @@ def get_db():
 
 # Endpoint to get all customers
 
+@app.route('/', methods=['GET'])
+def index():
+    return { "status": "OK" }
+
 @app.route('/customers', methods=['GET'])
 @jwt_required()
 @admin_required
