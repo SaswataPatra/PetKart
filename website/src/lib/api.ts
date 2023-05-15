@@ -47,7 +47,7 @@ export async function enrollAdmin(email: string) {
 export async function fetchProducts() {
     const response = await axios.get(`${API_BASE_URL}/products`)
 
-    return response.data
+    return response.data?.products ?? []
 }
 
 export async function convertBase64(file: File): Promise<string> {
