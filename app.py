@@ -17,6 +17,12 @@ import orders_module.get_all_orders as get_all_orders
 import orders_module.get_order_by_id as get_order_by_id
 import orders_module.update_order as update_order
 import orders_module.delete_order as delete_order
+#product module imports 
+import products_module.add_product as add_product
+import products_module.get_all_products as get_all_products
+import products_module.get_product_by_id as get_product_by_id
+import products_module.update_product as update_product
+import products_module.delete_product as delete_product
 
 
 from flask_jwt_extended import JWTManager,jwt_required,get_jwt
@@ -134,6 +140,48 @@ def update_order_api(id):
     else:
         return jsonify({'success': False, 'message': message}), 400
 
+#----PRODUCTS MODULE ENDPOINTS-----
+# Endpoint to get all products
+@app.route('/products', methods=['GET'])
+def get_products_api():
+    products, status_code = get_all_products.api_func()  # call api_func to get products and status code
+    return products, status_code  # return products and status code as JSON response
+
+# Endpoint to get a single product by id
+@app.route('/products/<int:id>', methods=['GET'])
+def get_product_api(id):
+    product, status_code = get_product_by_id.api_func(id)  # call api_func to get product by id and status code
+    return product, status_code  # return product and status code as JSON response
+
+# Endpoint to add a new product
+@app.route('/products', methods=['POST'])
+@staff_required
+def add_product_api():
+    success, message = add_product.add(request)
+    if success:
+        return jsonify({'success': True, 'message': message}), 200
+    else:
+        return jsonify({'success': False, 'message': message}), 400
+
+# Endpoint to delete a product by id
+@app.route('/products/<int:id>', methods=['DELETE'])
+@staff_required
+def delete_product_api(id):
+    success, message = delete_product.delete_product_by_id(id)
+    if success:
+        return jsonify({'success': True, 'message': message}), 200
+    else:
+        return jsonify({'success': False, 'message': message}), 400
+
+# Endpoint to update a product by id
+@app.route('/products/<int:id>', methods=['PUT'])
+@staff_required
+def update_product_api(id):
+    success, message = update_product.update(request.json, id)
+    if success:
+        return jsonify({'success': True, 'message': message}), 200
+    else:
+        return jsonify({'success': False, 'message': message}), 400
 
 @app.teardown_appcontext
 def close_connection(exception):
