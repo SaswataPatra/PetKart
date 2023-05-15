@@ -2,18 +2,20 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import sqlite3,json
 
+
+
 class User:
-    def __init__(self, id, name, email, password, role='customer', billing_address=None,
-                 shipping_address=None, payment_methods=None, image=None, created=None):
+    def __init__(self, id, name, email, password, billing_address=None,
+                 shipping_address=None, payment_methods=None, image=None,role="customer", created=None):
         self.id = id
         self.name = name
         self.email = email
         self.password = generate_password_hash(password)
-        self.role = role
         self.billing_address = billing_address
         self.shipping_address = shipping_address
         self.payment_methods = payment_methods
         self.image = image
+        self.role = role
         self.created = created or datetime.now()
 
     @staticmethod
@@ -37,16 +39,17 @@ class User:
         raise TypeError(f'Object of type {type(obj)} is not JSON serializable')
     
     def verify_password(self, password):
+        # print('INSIDE PASS',self.password,password)
         return check_password_hash(self.password, password)
     def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
             'email': self.email,
-            'role': self.role,
             'billing_address': self.billing_address,
             'shipping_address': self.shipping_address,
             'payment_methods': self.payment_methods,
             'image': self.image,
+            'role': self.role,
             'created': str(self.created)
         }

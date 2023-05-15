@@ -35,20 +35,20 @@ query_cartitem_table = "SELECT * FROM CartItems;"
 # Query for the Category table
 query_category_table = "SELECT * FROM Categories;"
 name = "Kaustav Sarkar"
-q = cur.execute("SELECT * FROM User WHERE name LIKE ?", ('%' + name + '%',))
+# q = cur.execute("SELECT * FROM User WHERE name LIKE ?", ('%' + name + '%',))
+qq = cur.execute("SELECT * FROM User WHERE id = 20")
+# with app.app_context():
+#     email = "ale@example.com"
+#     user = User.find_by_email(email)
+#     print(type(user.created))
+#     result = jsonify({'user':user.to_dict()})
 
-with app.app_context():
-    email = "ale@example.com"
-    user = User.find_by_email(email)
-    print(type(user.created))
-    result = jsonify({'user':user.to_dict()})
-
-    print(result)
+#     print(result)
 # user_id=2
 # q = cur.execute('SELECT role FROM User WHERE id = ?', (user_id,))
 # user_role = cur.fetchone()[0]
 # print(user_role)
-cur.execute(query_user_table)
+# cur.execute(query_user_table)
 print(cur.fetchall())
 connection.commit()
 connection.close()

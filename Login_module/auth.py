@@ -1,9 +1,8 @@
 from decorators.admin import admin_required
-
 from flask import jsonify, request,Blueprint
-from flask_jwt_extended import jwt_required, create_access_token, get_jwt, JWTManager
+from flask_jwt_extended import jwt_required, create_access_token,JWTManager
 from .models import User
-from datetime import datetime, timedelta
+from datetime import timedelta
 import re
 
 
@@ -40,10 +39,8 @@ def signup():
     shipping_address = request.json.get('shipping_address')
     payment_methods = request.json.get('payment_methods')
     image = request.json.get('image')
-
-    # Hash user's password for security
-    hashed_password = generate_password_hash(password)
-
+    role = "customer"
+    hashed_password = password
 
     # Validate user input
     if not name or not email or not password:
@@ -62,8 +59,8 @@ def signup():
     try:
         conn = sqlite3.connect('petshop.db')
         cur = conn.cursor()
-        cur.execute('INSERT INTO User (name, email, password, billing_address, shipping_address, payment_methods, image) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                    (name, email, hashed_password, billing_address, shipping_address, payment_methods, image))
+        cur.execute('INSERT INTO User (name, email, password, billing_address, shipping_address, payment_methods, image,role) VALUES (?, ?, ?, ?, ?, ?, ?,?)',
+                    (name, email, hashed_password, billing_address, shipping_address, payment_methods, image,role))
         conn.commit()
         conn.close()
         return jsonify({'message': 'Account created successfully!'}), 201
@@ -87,8 +84,7 @@ def enroll_admin():
         image = request.json.get('image')
 
         # Hash user's password for security
-        hashed_password = generate_password_hash(password)
-
+        hashed_password = password
         # Validate user input
         if not name or not email or not password:
             return jsonify({'error': 'Name, email, and password are required.'}), 400
@@ -120,7 +116,8 @@ def login():
         email = request.json.get('email')
         password = request.json.get('password')
         user = User.find_by_email(email)
-        print(user.name)
+        # print("NAME :", user.name)
+        # print("ROLE ",user.role)
         if user and user.verify_password(password):
             # Set expiration time for token
             expires_delta = timedelta(minutes=30)
