@@ -4,14 +4,18 @@ import { fetchProducts } from "@/lib/api";
 import { useEffect, useState } from "react";
 
 export default function IndexPage() {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetchProducts().then(setProducts)
-  }, [])
-  
-  return <>
-    <Hero />
-    <Collection products={products} />
-  </>
+    fetchProducts().then(setProducts);
+  }, []);
+
+  return (
+    <>
+      <Hero />
+      <div id="products">
+        <Collection products={products} />
+      </div>
+    </>
+  );
 }
