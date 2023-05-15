@@ -10,7 +10,7 @@ export async function login(email: string, password: string) {
     return response.data
 }
 
-interface IRegister {
+export interface IRegister {
     name: string
     email: string
     password: string
@@ -40,6 +40,15 @@ export async function enrollAdmin(email: string) {
             Authorization: `Bearer ${token}`
         }
     })
-     
+
     return response.data
+}
+
+export async function convertBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result as string)
+        reader.onerror = error => reject(error)
+    })
 }

@@ -1,6 +1,21 @@
+import { login } from '@/lib/api'
 import { LockClosedIcon } from '@heroicons/react/24/solid'
+import { useState } from 'react'
 
 export default function Login() {
+  const [data, setData] = useState({
+    email: "",
+    password: ""
+  })
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+
+    login(data.email, data.password).then((res) => {
+      console.log(res)
+    })
+  }
+
   return (
     <div className='h-screen w-screen'>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -34,6 +49,8 @@ export default function Login() {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
+                  value={data.email}
+                  onChange={(e) => setData({ ...data, email: e.target.value })}
                 />
               </div>
               <div>
@@ -48,6 +65,8 @@ export default function Login() {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
+                  value={data.password}
+                  onChange={(e) => setData({ ...data, password: e.target.value })}
                 />
               </div>
             </div>
@@ -76,6 +95,7 @@ export default function Login() {
               <button
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={handleSubmit}
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                   <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
