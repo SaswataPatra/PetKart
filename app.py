@@ -21,6 +21,7 @@ import orders_module.delete_order as delete_order
 
 from flask_jwt_extended import JWTManager,jwt_required,get_jwt
 from Login_module.auth import bp as auth_bp
+import time
 
 app = Flask(__name__) 
 app.config['JWT_SECRET_KEY'] = 'super-secret'
@@ -38,12 +39,13 @@ def get_db():
 """CUSTOMER API ENDPOINTS"""
 
 # Endpoint to get all customers
+
 @app.route('/customers', methods=['GET'])
+@jwt_required()
 @admin_required
-@jwt_required
 def get_customers_api():
     # Check if token has expired
-    if get_jwt()['type'] == 'access' and get_jwt()['expired']:
+    if get_jwt()['type'] == 'access' and get_jwt()['exp'] < time.time():
         return jsonify({'error': 'Token has expired'}), 401
     customers, status_code = get_all_customers.api_func()  # call api_func to get customers and status code
     return customers, status_code  # return customers and status code as JSON response
