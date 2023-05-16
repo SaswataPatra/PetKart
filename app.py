@@ -3,7 +3,7 @@ from decorators.admin import admin_required
 from decorators.staff import staff_required
 # from decorators.dummy import dummy_decorator
 import sqlite3
-from flask import Flask, render_template,g,request,jsonify,Blueprint
+from flask import Flask,g,request,jsonify
 from flask_cors import CORS
 #customer module imports
 import customers_module.add_customer as add_customer

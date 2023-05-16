@@ -5,10 +5,11 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { isAuthenticated } from "@/lib/api";
 
 const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
+  { name: "Home", href: "#" },
+  { name: "Shop", href: "#" },
   { name: "Your Orders", href: "#" },
-  { name: "Company", href: "#" },
+  { name: "Canines", href: "#" },
+  { name: "Contacts", href: "#" },
 ];
 
 export default function Hero() {
